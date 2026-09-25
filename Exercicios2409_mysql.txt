@@ -1,37 +1,5 @@
--- ENUNCIADO - nome do banco de dados - ads_rgmdecadaum
---
--- Uma loja precisa registrar suas vendas. Cada venda pertence a um cliente e
--- foi realizada por um vendedor.
---
---   1. Crie o banco de dados da loja.
---   2. Crie as tabelas cliente, vendedor e vendas. A tabela vendas deve ter
---      chave estrangeira para cliente e para vendedor.
---   3. Insira 5 registros em cada tabela.
---   4. Escreva uma consulta que retorne, para cada venda, o que foi vendido,
---      o nome do cliente e o nome do vendedor.
---   5. Apagar o vendedor 1 e apagar o vendedor 3: 
-delete from vendedor where coluna = numero_desejado;
---   6. Insira novamente o vendedor 1 
---   7. Insira novamente as vendas que o vendedo 1 realizou
-
-
--- 1. Banco de dados (troque "rgmdecadaum" pelo seu RGM)
-create database ads_rgmdecadaum;
-
-
--- 2. Tabelas 
-
-CREATE TABLE vendas (
-    id          INT AUTO_INCREMENT PRIMARY KEY,
-    produto     VARCHAR(80) NOT NULL,
-    quantidade  INT,
-    valor       DECIMAL(10,2),
-    data_venda  DATE,
-    id_cliente  INT,
-    id_vendedor INT,
-    FOREIGN KEY (id_cliente)  REFERENCES cliente (id),
-    FOREIGN KEY (id_vendedor) REFERENCES vendedor (id)
-);
+CREATE DATABASE ads_46580069 ;
+USE ads_46580069;
 
 CREATE TABLE cliente (
     id     INT AUTO_INCREMENT PRIMARY KEY,
@@ -46,9 +14,18 @@ CREATE TABLE vendedor (
     setor VARCHAR(40)
 );
 
+CREATE TABLE vendas (
+	id	INT AUTO_INCREMENT PRIMARY KEY,
+    produto	VARCHAR(80) NOT NULL,
+    quantidade	INT,
+    valor	DECIMAL(10, 2),
+    data_venda	DATE,
+    id_cliente	INT,
+    id_vendedor	INT,
+    FOREIGN KEY	(id_cliente)	REFERENCES cliente (id),
+    FOREIGN KEY	(id_vendedor)	REFERENCES vendedor (id)
+);
 
-
--- 3. Registros 
 INSERT INTO cliente (nome, cidade, email) VALUES
     ('Marina Costa',   'Itu',        'marina.costa@email.com'),
     ('Rafael Moreira', 'Salto',      'rafael.moreira@email.com'),
@@ -72,7 +49,7 @@ INSERT INTO vendedor (nome, setor) VALUES
 
 
 
-select * from cliente;
+select 1 from cliente where id = 2;
 
 select * from vendedor;
 
@@ -80,3 +57,35 @@ select * from vendas;
 
 delete from vendedor where coluna = numero_desejado;
 
+SELECT 
+	vendas.produto,
+    cliente.nome AS nome_cliente,
+    vendedor.nome AS nome_vendedor
+FROM vendas
+
+JOIN cliente ON vendas.id_cliente = cliente.id
+JOIN vendedor ON vendas.id_vendedor = vendedor.id;
+
+delete from vendas where id_vendedor = 1;
+delete from vendedor where id = 11;
+
+select * from vendedor;
+
+INSERT INTO vendedor (nome, setor) VALUES
+    ('Carlos Menezes', 'Balcao'),
+    ('Diego Sampaio',  'Balcao');
+    
+INSERT INTO vendas (produto, quantidade, valor, data_venda, id_cliente, id_vendedor) VALUES
+	('Notebook',   1, 3200.00, '2026-03-02', 1, 12),
+	('Mouse',      2,   89.90, '2026-03-05', 2, 12);
+    
+SELECT 
+	vendas.produto,
+    cliente.nome AS nome_cliente,
+    vendedor.nome AS nome_vendedor
+FROM vendas
+
+JOIN cliente ON vendas.id_cliente = cliente.id
+JOIN vendedor ON vendas.id_vendedor = vendedor.id;
+    
+select * from vendedor;
