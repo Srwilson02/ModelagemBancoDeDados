@@ -88,4 +88,4 @@ FROM vendas
 JOIN cliente ON vendas.id_cliente = cliente.id
 JOIN vendedor ON vendas.id_vendedor = vendedor.id;
     
-select * from vendedor;
+select * from cliente;
